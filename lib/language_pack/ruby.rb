@@ -689,8 +689,7 @@ WARNING
             "LIBRARY_PATH"                  => noshellescape("#{yaml_lib}:$LIBRARY_PATH"),
             "RUBYOPT"                       => syck_hack,
             "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true",
-            "BUNDLE_DISABLE_VERSION_CHECK"  => "true",
-            "BUNDLE_BUILD__RUBY_ODBC"       => ENV['BUNDLE_BUILD__RUBY_ODBC']
+            "BUNDLE_DISABLE_VERSION_CHECK"  => "true"
           }
           env_vars["JAVA_HOME"]                    = noshellescape("#{pwd}/$JAVA_HOME") if ruby_version.jruby?
           env_vars["BUNDLER_LIB_PATH"]             = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
@@ -699,6 +698,9 @@ WARNING
           puts "Running: #{bundle_command}"
           instrument "ruby.bundle_install" do
             bundle_time = Benchmark.realtime do
+              # Dante Hack -- I see no way to get this gem installed other than this manual action.
+              # Bundler is not picking up this parameter and I don't see another way to make it work.
+              pipe("gem install ruby-odbc -v '0.99999' -- #{ENV['BUNDLE_BUILD__RUBY_ODBC']}")
               bundler_output << pipe("#{bundle_command} --no-clean", out: "2>&1", env: env_vars, user_env: true)
             end
           end
