@@ -697,6 +697,7 @@ WARNING
 
           puts "*****DANTE TEST"
           puts ENV['BUNDLE_BUILD__RUBY_ODBC']
+          puts Dir[ENV['BUNDLE_BUILD__RUBY_ODBC']]
           puts "*****DANTE TEST"
 
           puts "Running: #{bundle_command}"
