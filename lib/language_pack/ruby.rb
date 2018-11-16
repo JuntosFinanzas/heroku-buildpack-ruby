@@ -695,6 +695,10 @@ WARNING
           env_vars["BUNDLER_LIB_PATH"]             = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
           env_vars["BUNDLE_DISABLE_VERSION_CHECK"] = "true"
 
+          puts "*****DANTE TEST"
+          puts ENV['BUNDLE_BUILD__RUBY_ODBC']
+          puts "*****DANTE TEST"
+
           puts "Running: #{bundle_command}"
           instrument "ruby.bundle_install" do
             bundle_time = Benchmark.realtime do
