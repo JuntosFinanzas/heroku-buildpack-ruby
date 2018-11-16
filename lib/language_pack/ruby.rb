@@ -690,24 +690,15 @@ WARNING
             "RUBYOPT"                       => syck_hack,
             "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true",
             "BUNDLE_DISABLE_VERSION_CHECK"  => "true",
-            "'BUNDLE_BUILD__RUBY_ODBC'"     => ENV['BUNDLE_BUILD__RUBY_ODBC']
+            "BUNDLE_BUILD__RUBY_ODBC"       => ENV['BUNDLE_BUILD__RUBY_ODBC']
           }
           env_vars["JAVA_HOME"]                    = noshellescape("#{pwd}/$JAVA_HOME") if ruby_version.jruby?
           env_vars["BUNDLER_LIB_PATH"]             = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
           env_vars["BUNDLE_DISABLE_VERSION_CHECK"] = "true"
 
-          puts "*****DANTE TEST"
-          puts ENV['BUNDLE_BUILD__RUBY_ODBC']
-          puts ENV['LD_LIBRARY_PATH']
-          puts Dir.entries('.apt/usr/include/iodbc/').to_s
-          puts "*****DANTE TEST"
-
           puts "Running: #{bundle_command}"
           instrument "ruby.bundle_install" do
             bundle_time = Benchmark.realtime do
-              bundler_output << pipe("gem install ruby-odbc -v '0.99999' -- #{ENV['BUNDLE_BUILD__RUBY_ODBC']}")
-              bundler_output << pipe("bundle config build.ruby-odbc #{ENV['BUNDLE_BUILD__RUBY_ODBC']}")
-              bundler_output << pipe("bundle config")
               bundler_output << pipe("#{bundle_command} --no-clean", out: "2>&1", env: env_vars, user_env: true)
             end
           end
