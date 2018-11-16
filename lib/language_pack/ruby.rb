@@ -697,7 +697,7 @@ WARNING
 
           puts "*****DANTE TEST"
           puts ENV['BUNDLE_BUILD__RUBY_ODBC']
-          puts Dir.entries(ENV['BUILD_DIR'] + '/.apt/usr/include/iodbc/').to_s
+          puts Dir.entries('.apt/usr/include/iodbc/').to_s
           puts "*****DANTE TEST"
 
           puts "Running: #{bundle_command}"
